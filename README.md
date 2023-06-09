@@ -3,7 +3,7 @@ Implementation of Theorem 2.2 https://web.math.princeton.edu/~naor/homepage%20fi
 
 Theorem 2.2. Suppose $\left(X, d_X\right)$ is a metric space, $A \subseteq X$ and let $f: A \rightarrow \ell_{\infty}(\Gamma)$ a Lipschitz function. Then, there is an
 
-extension $\tilde{f}: X \rightarrow \ell_{\infty}(\Gamma)$ of $f$, i.e. with $\left\tilde{f}\right|_A=f$, such that $\|\tilde{f}\|_{\text {Lip }}=\|f\|_{\text {Lip }}$.
+extension $\tilde{f}: X \rightarrow \ell_{\infty}(\Gamma)$ of $f$, i.e. with $$\left.\tilde{f}\right|_A=f$$, such that $\|\tilde{f}\|_{\text {Lip }}=\|f\|_{\text {Lip }}$.
 Proof. Let $\|f\|_{\text {Lip }}=L$ and write
 
 $$
