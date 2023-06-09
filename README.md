@@ -1,11 +1,17 @@
 # Formal_Lipschitz
 Implementation of Theorem 2.2 https://web.math.princeton.edu/~naor/homepage%20files/embeddings_extensions.pdf
-Theorem 2.2. Suppose $\left(X, d_X\right)$ is a metric space, $A \subseteq X$ and let $f: A \rightarrow \ell_{\infty}(\Gamma)$ a Lipschitz function. Then, there is an extension $\tilde{f}: X \rightarrow \ell_{\infty}(\Gamma)$ of $f$, i.e. with $\left.\tilde{f}\right|_A=f$, such that $\|\tilde{f}\|_{\text {Lip }}=\|f\|_{\text {Lip }}$.
+
+Theorem 2.2. Suppose $\left(X, d_X\right)$ is a metric space, $A \subseteq X$ and let $f: A \rightarrow \ell_{\infty}(\Gamma)$ a Lipschitz function. Then, there is an
+
+extension $\tilde{f}: X \rightarrow \ell_{\infty}(\Gamma)$ of $f$, i.e. with $\left.\tilde{f}\right|_A=f$, such that $\|\tilde{f}\|_{\text {Lip }}=\|f\|_{\text {Lip }}$.
 Proof. Let $\|f\|_{\text {Lip }}=L$ and write
+
 $$
 f(x)=\left(f_\gamma(x)\right)_{\gamma \in \Gamma}, \text { for } x \in X \text { and } f_\gamma(x) \in \mathbb{R}
 $$
+
 Then, we see that
+
 $$
 \|f\|_{\text {Lip }}=\sup _{d_X(x, y) \leqslant 1} \sup _{\gamma \in \Gamma}\left|f_\gamma(x)-f_\gamma(y)\right|=\sup _{\gamma \in \Gamma}\left\|f_\gamma\right\|_{\text {Lip }},
 $$
