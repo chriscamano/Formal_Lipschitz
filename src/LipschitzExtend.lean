@@ -21,18 +21,30 @@ properties only on the subspace s and hope to extend this property to all of α
 
 notation "ℓ^∞(" ι ") " => lp (fun i : ι => ℝ ) ∞
 
+
 theorem LipschitzOnWith.extend_pi' 
   [PseudoMetricSpace α]         -- α is a metric space 
   {s : Set α}                   -- s is a subspace of α
-  {f : α → ℓ^∞(ι)}              -- f is a function from a to l_∞ of index set iota for components  
+  {f : α → ℓ^∞(ι)}              -- f is a function from α to l_∞ of index set iota for components 
   {K : ℝ≥0}                     -- K is a non negative scalar for the lipshitz condition
-  (hfb: Memℓp f ∞)              -- hyp: f is a member of l ∞
-  (hfl : LipschitzOnWith K f s) -- hyp:the function is lipschitz on s with scalar K 
   
-  : ∃ g : α → ℓ^∞(ι), LipschitzWith K g ∧ EqOn f g s := by
-  have : ∀ i, ∃ g : α → ℝ, LipschitzWith K g ∧ EqOn (fun x => f x i) g s := fun i => by
-    have : LipschitzOnWith K (fun x : α => f x i) s :=
-      LipschitzOnWith.of_dist_le_mul fun x hx y hy =>(dist_le_pi_dist _ _ i).trans (hf.dist_le_mul x hx y hy)
+  (hfl : LipschitzOnWith K f s) : -- hyp:the function is lipschitz on s with scalar K 
+  
+  ∃ g : α → ℓ^∞(ι), LipschitzWith K g ∧ EqOn f g s := by
+  have : ∀ i : ι, ∃ g : α → ℝ, LipschitzWith K g ∧ EqOn (fun x => f x i) g s := fun i => by
+    have : LipschitzOnWith K (fun x : α => f x i) s := by
+      refine @LipschitzOnWith.of_dist_le_mul α ℝ _ _ K s (fun x => f x i) ?_
+      dsimp
+      intro x hx y hy
+      rw [dist_eq_norm]
+      -- dsimp
+      calc ‖f x i - f y i‖ ≤ ‖f x - f y‖ := sorry
+        _ ≤ K * dist x y := sorry
+      -- fun x hx y hy =>by 
+      -- dist_eq_norm
+        
+      
+      -- (dist_le_pi_dist _ _ i).trans (hf.dist_le_mul x hx y hy)
     exact this.extend_real
 
   choose g hg using this
