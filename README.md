@@ -1,6 +1,9 @@
 ## Formal_Lipschitz
 Implementation of Theorem 2.2 https://web.math.princeton.edu/~naor/homepage%20files/embeddings_extensions.pdf
+
 Lean documentation : https://leanprover-community.github.io/mathlib4_docs/Mathlib/Analysis/NormedSpace/lpSpace.html 
+
+Lean Hahn Banach theorem implementation: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Analysis/NormedSpace/HahnBanach/Extension.html
 
 ## Theorem 2.2. 
 
