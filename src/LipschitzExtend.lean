@@ -33,20 +33,14 @@ theorem LipschitzOnWith.extend_pi'
   ∃ g : α → ℓ^∞(ι), LipschitzWith K g ∧ EqOn f g s := by
   have : ∀ i : ι, ∃ g : α → ℝ, LipschitzWith K g ∧ EqOn (fun x => f x i) g s := fun i => by
     have : LipschitzOnWith K (fun x : α => f x i) s := by
-      refine @LipschitzOnWith.of_dist_le_mul α ℝ _ _ K s (fun x => f x i) ?_
-      dsimp
+      rw [lipschitzOnWith_iff_dist_le_mul] 
+      rw [lipschitzOnWith_iff_dist_le_mul] at hfl
       intro x hx y hy
-      rw [dist_eq_norm]
-      -- dsimp
-      calc ‖f x i - f y i‖ ≤ ‖f x - f y‖ := sorry
-        _ ≤ K * dist x y := sorry
-      -- fun x hx y hy =>by 
-      -- dist_eq_norm
-        
-      
-      -- (dist_le_pi_dist _ _ i).trans (hf.dist_le_mul x hx y hy)
+      have := @lp.norm_apply_le_norm
+      calc 
+        dist (f x i) (f y i) ≤ dist (f x) (f y) := lp.norm_apply_le_norm top_ne_zero (f x - f y ) i
+        _ ≤ K * dist x y :=  hfl x hx y hy
     exact this.extend_real
-
   choose g hg using this
 
   refine' ⟨fun x i => g i x, LipschitzWith.of_dist_le_mul fun x y => _, _⟩
