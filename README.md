@@ -1,7 +1,7 @@
 ## Formal_Lipschitz
 Implementation of Theorem 2.2 https://web.math.princeton.edu/~naor/homepage%20files/embeddings_extensions.pdf
 
-# Relevant Library functions 
+## Relevant Library functions 
 Lean documentation : https://leanprover-community.github.io/mathlib4_docs/Mathlib/Analysis/NormedSpace/lpSpace.html 
 
 Lp space : https://leanprover-community.github.io/mathlib4_docs/Mathlib/Analysis/NormedSpace/lpSpace.html
