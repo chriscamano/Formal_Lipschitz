@@ -1,6 +1,10 @@
 import Mathlib.Topology.MetricSpace.Lipschitz 
 import Mathlib.Analysis.NormedSpace.lpSpace
 import Mathlib.Data.Real.ENNReal
+import Mathlib.Data.Set.Function
+
+open ENNReal NNReal Metric Function Set 
+import Mathlib.Data.Real.ENNReal
 
 open scoped NNReal ENNReal BigOperators
 
@@ -17,7 +21,7 @@ notation "ℓ^∞(" ι ") " => lp (fun i : ι => ℝ ) ∞
 variable {α : Type _} {E : α → Type _} {p q : ℝ≥0∞} [∀ i, NormedAddCommGroup (E i)]
 
 theorem LipschitzOnWith.extend_pi' [PseudoMetricSpace α] {f : α → ℓ^∞(ι) } {s : Set α}
-    {K : ℝ≥0} (hfl : LipschitzOnWith K f s) : ∃ g : α → ℓ^∞(ι), LipschitzWith K g := by
+    {K : ℝ≥0} (hfl : LipschitzOnWith K f s) : ∃ g : α → ℓ^∞(ι), LipschitzWith K g ∧ EqOn f g s:= by
     sorry
 --   have : ∀ i, ∃ g : α → ℝ, LipschitzWith K g ∧ EqOn (fun x => f x i) g s := fun i => by
     -- have : LipschitzOnWith K (fun x : α => f x i) s :=
