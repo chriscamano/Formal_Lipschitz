@@ -17,18 +17,7 @@ as `lp (fun i : ι => 𝕜) 2`. -/
 
 notation "ℓ^∞(" ι ") " => lp (fun i : ι => ℝ ) ∞
 
-variable {α : Type _} --{E : α → Type _} 
-  {p q : ℝ≥0∞} --[∀ i, NormedAddCommGroup (E i)]
-
-def LipschitzWith' [PseudoEMetricSpace α] [PseudoEMetricSpace β] (K : ℝ≥0) (f : α → β) :=
-  ∀ x y, edist (f x) (f y) ≤ K * edist x y
--- #align lipschitz_with LipschitzWith
-
-theorem lipschitzWith_iff_dist_le_mul' [PseudoMetricSpace α] [PseudoMetricSpace β] {K : ℝ≥0}
-    {f : α → β} : LipschitzWith K f ↔ ∀ x y, dist (f x) (f y) ≤ K * dist x y := by
-  simp only [LipschitzWith, edist_nndist, dist_nndist]
-  norm_cast
--- #align lipschitz_with_iff_dist_le_mul lipschitzWith_iff_dist_le_mul
+variable {α : Type _} --{E : α → Type _} {p q : ℝ≥0∞} --[∀ i, NormedAddCommGroup (E i)]
 
 theorem isLInfinity_iff_domain_and_bounded [PseudoMetricSpace α] {α : Type _} {g : α → ℓ^{ι}}
 
@@ -63,4 +52,4 @@ theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α 
   --   ext1 i
   --   exact (hg i).2 hx
 
-#align lipschitz_on_with'.extend_pi LipschitzOnWith.extend_pi
+
