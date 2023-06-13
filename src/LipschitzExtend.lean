@@ -38,9 +38,18 @@ theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α 
     have hf_extb : ∀ a : α, Memℓp (f_ext a) ∞ :=by 
       intro a
       rw [memℓp_infty_iff]
+      have M:ℝ := sorry
+      use K * dist a a₀ + M
+      rintro - ⟨i, rfl⟩
       dsimp
-      have hg1 := fun i => (hg i).1
-      unfold LipschitzWith at hg1
+      calc
+        abs (f_ext a) ≤  abs (f_ext a + f a₀ - f a₀)  := 
+        _≤ abs (f_ext a - f a₀) + abs (f a₀) := 
+        _≤ abs (f_ext a + f a₀) := 
+        _≤
+
+
+
       -- use K
       -- rw[ mem_upperBounds]
       -- simp
