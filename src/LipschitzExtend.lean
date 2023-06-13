@@ -3,9 +3,8 @@ import Mathlib.Analysis.NormedSpace.lpSpace
 import Mathlib.Data.Real.ENNReal
 import Mathlib.Data.Set.Function
 
-open ENNReal NNReal Metric Function Set
-
-open scoped NNReal ENNReal BigOperators
+open  ENNReal Metric Function Set
+open scoped NNReal BigOperators
 
 /- A function `f : α → (ι → ℝ)` which is `K`-Lipschitz on a subset `s` admits a `K`-Lipschitz
 extension to the whole space.
@@ -18,8 +17,6 @@ as `lp (fun i : ι => 𝕜) 2`. -/
 notation "ℓ^∞(" ι ") " => lp (fun i : ι => ℝ ) ∞
 
 variable {α : Type _} --{E : α → Type _} {p q : ℝ≥0∞} --[∀ i, NormedAddCommGroup (E i)]
-
-theorem isLInfinity_iff_domain_and_bounded [PseudoMetricSpace α] {α : Type _} {g : α → ℓ^{ι}}
 
 theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α → ℓ^∞(ι)} 
 {K : ℝ≥0} (hfl : LipschitzOnWith K f s): ∃ g : α → ℓ^∞(ι), LipschitzWith K g ∧ EqOn f g s := by
@@ -35,15 +32,31 @@ theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α 
         _ ≤ K * dist x y :=  hfl x hx y hy
     exact this.extend_real
   choose g hg using this
-  let f_ext : α → ι → ℝ := fun x i => g i x
-  have hf_extb : ∀ a : α, Memℓp (f_ext a) ∞
-  · intro a
-    rw [memℓp_infty_iff]
-    sorry 
+  rcases s.eq_empty_or_nonempty with rfl| ⟨a₀, ha₀_in_s⟩
+  · sorry
+  · let f_ext : α → ι → ℝ := fun x i => g i x
+    have hf_extb : ∀ a : α, Memℓp (f_ext a) ∞ :=by 
+      intro a
+      rw [memℓp_infty_iff]
+      dsimp
+      have hg1 := fun i => (hg i).1
+      unfold LipschitzWith at hg1
+      -- use K
+      -- rw[ mem_upperBounds]
+      -- simp
+      -- intro x
+      -- specialize hg x
+      -- unfold LipschitzWith at hg
+
   let f_ext' : α → ℓ^∞(ι) := fun i ↦ ⟨f_ext i, hf_extb i⟩
   use f_ext'
   dsimp
   sorry
+
+
+
+
+
   -- show LipschitzWith K f_ext ∧ EqOn f g s
 
   -- refine' ⟨fun x i => g i x, LipschitzWith.of_dist_le_mul fun x y => _, _⟩
