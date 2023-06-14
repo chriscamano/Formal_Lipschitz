@@ -2,10 +2,10 @@ import Mathlib.Topology.MetricSpace.Lipschitz
 import Mathlib.Analysis.NormedSpace.lpSpace
 import Mathlib.Data.Real.ENNReal
 import Mathlib.Data.Set.Function
+import Mathlib.Analysis.Normed.Group.Basic
 
-open  ENNReal Metric Function Set
-open scoped NNReal BigOperators
--- set_option synthInstance.maxHeartbeats 30000
+open  ENNReal Metric Function Set 
+open scoped NNReal BigOperators Group
 
 /- A function `f : α → (ι → ℝ)` which is `K`-Lipschitz on a subset `s` admits a `K`-Lipschitz
 extension to the whole space.
@@ -49,14 +49,26 @@ theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α 
         _ ≤ abs (g i a - g i a₀ ) + abs (g i a₀ - f a₀ i) + abs (f a₀ i) := by
           gcongr
           apply abs_add
-        _ = abs (g i a - g i a₀ ) + abs (g i a₀ - f a₀ i) + M := by
-          have M : ℝ := abs (f a₀ i)
-          
-          rw[M]
-        _ = abs (g i a - g i a₀ ) + M := by
-          apply hg.2
-        _ ≤ ↑K * dist a a₀ + M:= by 
-          sorry
+        _ =abs (g i a - g i a₀ ) + abs (0) + abs (f a₀ i) := by
+          simp
+          specialize hg i
+          cases' hg with hleft hright 
+          specialize hright ha₀_in_s 
+          dsimp at hright
+          exact Iff.mpr sub_eq_zero (id (Eq.symm hright))
+        _ ≤ abs (g i a - g i a₀ ) + abs (f a₀ i) := by 
+            norm_num
+        _ ≤ ↑K * dist a a₀ + abs (f a₀ i):= by 
+            specialize hg i
+            cases' hg with hleft hright 
+            unfold LipschitzWith  at hleft
+            simp
+            specialize hleft a a₀ 
+            dist_eq_norm_sub 
+            rw[dist_eq_norm_sub] at hleft
+            simp
+            exact hleft
+            sorry
           
 
   let f_ext' : α → ℓ^∞(ι) := fun i ↦ ⟨f_ext i, hf_extb i⟩
