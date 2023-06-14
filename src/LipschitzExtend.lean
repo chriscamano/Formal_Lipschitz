@@ -32,7 +32,13 @@ theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α 
     exact this.extend_real
   choose g hg using this
   rcases s.eq_empty_or_nonempty with rfl| ⟨a₀, ha₀_in_s⟩
-  · sorry
+  . -- · intro i
+  --   cases' hg with hleft hright
+  --   rw[lipschitzOnWith_empty] at hg
+  --   specialize hg i  
+  --   rw[lipschitzWith_iff_dist_le_mul] at 
+   sorry
+  
   · let f_ext : α → ι → ℝ := fun x i => g i x
     have hf_extb : ∀ a : α, Memℓp (f_ext a) ∞ := by 
       intro a
@@ -89,18 +95,4 @@ theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α 
       unfold EqOn at hgi
       dsimp at hgi
       exact hgi  hyp
-
-
-
-
-
-
-  -- show LipschitzWith K f_ext ∧ EqOn f g s
-
-  -- refine' ⟨fun x i => g i x, LipschitzWith.of_dist_le_mul fun x y => _, _⟩
-  -- · exact (dist_pi_le_iff (mul_nonneg K.2 dist_nonneg)).2 fun i => (hg i).1.dist_le_mul x y
-  -- · intro x hx
-  --   ext1 i
-  --   exact (hg i).2 hx
-
 
