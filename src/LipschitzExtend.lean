@@ -72,8 +72,25 @@ theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α 
       
     let f_ext' : α → ℓ^∞(ι) := fun i ↦ ⟨f_ext i, hf_extb i⟩
     refine ⟨f_ext', ?_, ?_⟩
-    · sorry
-    · sorry
+    · rw[lipschitzWith_iff_dist_le_mul]
+      intro x y 
+      rw[ dist_eq_norm]
+      apply lp.norm_le_of_forall_le
+      positivity 
+      intro i 
+      have hgi:= (hg i).1
+      rw[lipschitzWith_iff_dist_le_mul] at hgi
+      have := hgi x y 
+      rw[dist_eq_norm] at this
+      exact this
+    · intro a hyp
+      ext i
+      have hgi:= (hg i ).2
+      unfold EqOn at hgi
+      dsimp at hgi
+      exact hgi  hyp
+
+
 
 
 
