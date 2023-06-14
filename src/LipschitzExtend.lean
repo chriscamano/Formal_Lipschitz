@@ -5,6 +5,7 @@ import Mathlib.Data.Set.Function
 
 open  ENNReal Metric Function Set
 open scoped NNReal BigOperators
+-- set_option synthInstance.maxHeartbeats 30000
 
 /- A function `f : α → (ι → ℝ)` which is `K`-Lipschitz on a subset `s` admits a `K`-Lipschitz
 extension to the whole space.
@@ -16,8 +17,7 @@ as `lp (fun i : ι => 𝕜) 2`. -/
 
 notation "ℓ^∞(" ι ") " => lp (fun i : ι => ℝ ) ∞
 
-variable {α : Type _} --{E : α → Type _} {p q : ℝ≥0∞} --[∀ i, NormedAddCommGroup (E i)]
-
+variable {α : Type _}
 theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α → ℓ^∞(ι)} 
 {K : ℝ≥0} (hfl : LipschitzOnWith K f s): ∃ g : α → ℓ^∞(ι), LipschitzWith K g ∧ EqOn f g s := by
   let E : ι → Type _ := (fun i : ι ↦ ℝ)
@@ -38,24 +38,26 @@ theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α 
     have hf_extb : ∀ a : α, Memℓp (f_ext a) ∞ :=by 
       intro a
       rw [memℓp_infty_iff]
-      have M:ℝ := sorry
+      have M :ℝ := sorry
       use K * dist a a₀ + M
       rintro - ⟨i, rfl⟩
       dsimp
       calc
-        abs (f_ext a) ≤  abs (f_ext a + f a₀ - f a₀)  := 
-        _≤ abs (f_ext a - f a₀) + abs (f a₀) := 
-        _≤ abs (f_ext a + f a₀) := 
-        _≤
-
-
-
-      -- use K
-      -- rw[ mem_upperBounds]
-      -- simp
-      -- intro x
-      -- specialize hg x
-      -- unfold LipschitzWith at hg
+        abs (g i a) = abs (g i a - f a₀ i + f a₀ i) := by simp
+        _ ≤ abs (g i a - f a₀ i) + abs (f a₀ i) :=  abs_add _ _
+        _ = abs ((g i a - g i a₀) + (g i a₀ - f a₀ i)) + abs (f a₀ i):= by ring_nf
+        _ ≤ abs (g i a - g i a₀ ) + abs (g i a₀ - f a₀ i) + abs (f a₀ i) := by
+          gcongr
+          apply abs_add
+        _ = abs (g i a - g i a₀ ) + abs (g i a₀ - f a₀ i) + M := by
+          have M : ℝ := abs (f a₀ i)
+          
+          rw[M]
+        _ = abs (g i a - g i a₀ ) + M := by
+          apply hg.2
+        _ ≤ ↑K * dist a a₀ + M:= by 
+          sorry
+          
 
   let f_ext' : α → ℓ^∞(ι) := fun i ↦ ⟨f_ext i, hf_extb i⟩
   use f_ext'
