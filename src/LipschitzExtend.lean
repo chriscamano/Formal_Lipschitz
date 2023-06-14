@@ -18,11 +18,11 @@ as `lp (fun i : ι => 𝕜) 2`. -/
 notation "ℓ^∞(" ι ") " => lp (fun i : ι => ℝ ) ∞
 
 theorem lipschitzWith_const [PseudoMetricSpace α] [PseudoMetricSpace β] (b: β) (K):
-  LipschitzWith K (fun x: α ↦ b):= by
-  rw[lipschitzWith_iff_dist_le_mul]
-  intro x y
-  simp
-  positivity
+  LipschitzWith K (fun x: α ↦ b):= by intro x y ;simp
+  -- rw[lipschitzWith_iff_dist_le_mul]
+  -- intro x y
+  -- simp
+  -- positivity
 
 variable {α : Type _}
 theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α → ℓ^∞(ι)} 
