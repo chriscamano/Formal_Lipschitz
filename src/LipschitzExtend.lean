@@ -17,6 +17,9 @@ as `lp (fun i : ι => 𝕜) 2`. -/
 
 notation "ℓ^∞(" ι ") " => lp (fun i : ι => ℝ ) ∞
 
+theorem lipschitzWith_const [PseudoMetricSpace α] [PseudoMetricSpace β] (b: β) (K):
+  LipschitzWith K (fun x:α ↦ b):= sorry
+
 variable {α : Type _}
 theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α → ℓ^∞(ι)} 
 {K : ℝ≥0} (hfl : LipschitzOnWith K f s): ∃ g : α → ℓ^∞(ι), LipschitzWith K g ∧ EqOn f g s := by
@@ -32,13 +35,8 @@ theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α 
     exact this.extend_real
   choose g hg using this
   rcases s.eq_empty_or_nonempty with rfl| ⟨a₀, ha₀_in_s⟩
-  . -- · intro i
-  --   cases' hg with hleft hright
-  --   rw[lipschitzOnWith_empty] at hg
-  --   specialize hg i  
-  --   rw[lipschitzWith_iff_dist_le_mul] at 
-   sorry
-  
+  . use fun _↦ 0, lipschitzWith_const 0 K
+    simp
   · let f_ext : α → ι → ℝ := fun x i => g i x
     have hf_extb : ∀ a : α, Memℓp (f_ext a) ∞ := by 
       intro a
