@@ -26,7 +26,6 @@ theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α 
     · rw [lipschitzOnWith_iff_dist_le_mul] 
       rw [lipschitzOnWith_iff_dist_le_mul] at hfl
       intro x hx y hy
-      have := @lp.norm_apply_le_norm
       calc 
         dist (f x i) (f y i) ≤ dist (f x) (f y) := lp.norm_apply_le_norm top_ne_zero (f x - f y ) i
         _ ≤ K * dist x y :=  hfl x hx y hy
@@ -35,10 +34,10 @@ theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α 
   rcases s.eq_empty_or_nonempty with rfl| ⟨a₀, ha₀_in_s⟩
   · sorry
   · let f_ext : α → ι → ℝ := fun x i => g i x
-    have hf_extb : ∀ a : α, Memℓp (f_ext a) ∞ :=by 
+    have hf_extb : ∀ a : α, Memℓp (f_ext a) ∞ := by 
       intro a
       rw [memℓp_infty_iff]
-      have M :ℝ := sorry
+      let M : ℝ := ‖f a₀‖
       use K * dist a a₀ + M
       rintro - ⟨i, rfl⟩
       dsimp
@@ -49,7 +48,7 @@ theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α 
         _ ≤ abs (g i a - g i a₀ ) + abs (g i a₀ - f a₀ i) + abs (f a₀ i) := by
           gcongr
           apply abs_add
-        _ =abs (g i a - g i a₀ ) + abs (0) + abs (f a₀ i) := by
+        _ = abs (g i a - g i a₀ ) + abs (0) + abs (f a₀ i) := by
           simp
           specialize hg i
           cases' hg with hleft hright 
@@ -61,21 +60,20 @@ theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α 
         _ ≤ ↑K * dist a a₀ + abs (f a₀ i):= by 
             specialize hg i
             cases' hg with hleft hright 
-            unfold LipschitzWith  at hleft
-            simp
+            gcongr
             specialize hleft a a₀ 
-            dist_eq_norm_sub 
-            rw[dist_eq_norm_sub] at hleft
-            simp
-            exact hleft
-            sorry
-          
-
-  let f_ext' : α → ℓ^∞(ι) := fun i ↦ ⟨f_ext i, hf_extb i⟩
-  use f_ext'
-  dsimp
-  sorry
-
+            conv_rhs at hleft => 
+              rw [edist_dist, coe_nnreal_eq, ← ENNReal.ofReal_mul K.coe_nonneg]
+            rwa [edist_le_ofReal (by positivity)] at hleft
+        _ ≤ ↑K * dist a a₀ + M := by
+            gcongr    
+            change ‖f a₀ i‖ ≤ _
+            apply lp.norm_apply_le_norm top_ne_zero   
+      
+    let f_ext' : α → ℓ^∞(ι) := fun i ↦ ⟨f_ext i, hf_extb i⟩
+    refine ⟨f_ext', ?_, ?_⟩
+    · sorry
+    · sorry
 
 
 
