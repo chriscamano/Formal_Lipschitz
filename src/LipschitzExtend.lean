@@ -63,7 +63,6 @@ theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α 
             gcongr    
             change ‖f a₀ i‖ ≤ _
             apply lp.norm_apply_le_norm top_ne_zero   
-
     let f_ext' : α → ℓ^∞(ι) := fun i ↦ ⟨f_ext i, hf_extb i⟩
     refine ⟨f_ext', ?_, ?_⟩
     · rw[lipschitzWith_iff_dist_le_mul]
