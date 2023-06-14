@@ -49,12 +49,10 @@ theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α 
         _ ≤ abs (g i a - g i a₀ ) + abs (g i a₀ - f a₀ i) + abs (f a₀ i) := by
           gcongr
           apply abs_add
-        _ = abs (g i a - g i a₀ ) + abs (0) + abs (f a₀ i) := by
+        _ = abs (g i a - g i a₀ ) + abs (f a₀ i) := by
           specialize hgr  ha₀_in_s 
           norm_num
           simp_rw [hgr, sub_self _]
-        _ ≤ abs (g i a - g i a₀ ) + abs (f a₀ i) := by 
-            norm_num
         _ ≤ ↑K * dist a a₀ + abs (f a₀ i):= by
             gcongr
             specialize hgl a a₀ 
