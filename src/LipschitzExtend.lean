@@ -37,7 +37,7 @@ theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α 
   choose g hg using this
   rcases s.eq_empty_or_nonempty with rfl | ⟨a₀, ha₀_in_s⟩
   . exact ⟨fun _ ↦ 0, lipschitzWith_const 0 K, by simp⟩
-  · let f_ext : α → ι → ℝ := fun x i ↦ g i x --<-------- golf me?
+  · let f_ext : α → ι → ℝ := fun x i ↦ g i x
     have hf_extb : ∀ a : α, Memℓp (f_ext a) ∞ := by 
       intro a
       let M : ℝ := ‖f a₀‖
@@ -45,10 +45,10 @@ theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α 
       rintro - ⟨i, rfl⟩
       rcases hg i with ⟨hgl, hgr⟩
       calc
-        |g i a| = abs (g i a - f a₀ i + f a₀ i) := by simp
-        _ ≤ abs (g i a - f a₀ i) + abs (f a₀ i) :=  abs_add _ _ --<-------- golf me
-        _ ≤ abs (g i a - g i a₀ ) + abs (g i a₀ - f a₀ i) + abs (f a₀ i) := by gcongr; apply abs_sub_le 
-        _ = abs (g i a - g i a₀ ) + abs (f a₀ i) := by simp [hgr ha₀_in_s, sub_self _]
+        |g i a| = |g i a - f a₀ i + f a₀ i| := by simp
+        _ ≤ |g i a - f a₀ i| + |f a₀ i| :=  abs_add _ _ 
+        _ ≤ |g i a - g i a₀| + |g i a₀ - f a₀ i| + |f a₀ i| := by gcongr; apply abs_sub_le 
+        _ = |g i a - g i a₀| + |f a₀ i| := by simp [hgr ha₀_in_s, sub_self _]
         _ ≤ ↑K * dist a a₀ + abs (f a₀ i):= by 
             gcongr
             exact lipschitzWith_iff_dist_le_mul.1 hgl a a₀
@@ -62,5 +62,5 @@ theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α 
       apply lp.norm_le_of_forall_le; positivity
       exact fun i ↦ lipschitzWith_iff_dist_le_mul.mp (hg i).1 x y
     · intro a hyp
-      ext i --<-------- golf me
+      ext i 
       exact (hg i).2 hyp 
