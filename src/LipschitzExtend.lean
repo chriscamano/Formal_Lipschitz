@@ -21,6 +21,7 @@ theorem lipschitzWith_const [PseudoMetricSpace α] [PseudoMetricSpace β] (b: β
 
 theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α → ℓ^∞(ι)} 
 {K : ℝ≥0} (hfl : LipschitzOnWith K f s): ∃ g : α → ℓ^∞(ι), LipschitzWith K g ∧ EqOn f g s := by
+  
   have : ∀ i : ι, ∃ g : α → ℝ, LipschitzWith K g ∧ EqOn (fun x => f x i) g s := fun i => by
     have : LipschitzOnWith K (fun x : α => f x i) s
     · rw [lipschitzOnWith_iff_dist_le_mul] 
@@ -31,10 +32,10 @@ theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α 
         _ ≤ K * dist x y :=  hfl x hx y hy
     exact this.extend_real
   choose g hg using this
-  rcases s.eq_empty_or_nonempty with rfl| ⟨a₀, ha₀_in_s⟩
+  rcases s.eq_empty_or_nonempty with rfl | ⟨a₀, ha₀_in_s⟩
   . use fun _↦ 0, lipschitzWith_const 0 K
     simp
-  · let f_ext : α → ι → ℝ := fun x i => g i x
+  · let f_ext : α → ι → ℝ := fun x i => g i x --<-------- golf me?
     have hf_extb : ∀ a : α, Memℓp (f_ext a) ∞ := by 
       intro a
       let M : ℝ := ‖f a₀‖
@@ -44,7 +45,7 @@ theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α 
       rcases hg with ⟨hgl, hgr⟩
       calc
         abs (g i a) = abs (g i a - f a₀ i + f a₀ i) := by simp
-        _ ≤ abs (g i a - f a₀ i) + abs (f a₀ i) :=  abs_add _ _ --------
+        _ ≤ abs (g i a - f a₀ i) + abs (f a₀ i) :=  abs_add _ _ --<-------- golf me
         _ = abs ((g i a - g i a₀) + (g i a₀ - f a₀ i)) + abs (f a₀ i):= by ring_nf
         _ ≤ abs (g i a - g i a₀ ) + abs (g i a₀ - f a₀ i) + abs (f a₀ i) := by
           gcongr
@@ -71,5 +72,5 @@ theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α 
       rw[lipschitzWith_iff_dist_le_mul] at hgi
       exact hgi x y
     · intro a hyp
-      ext i
+      ext i --<-------- golf me
       exact (hg i).2 hyp 
