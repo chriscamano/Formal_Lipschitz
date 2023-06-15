@@ -49,7 +49,7 @@ theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α 
         _ ≤ |g i a - f a₀ i| + |f a₀ i| :=  abs_add _ _ 
         _ ≤ |g i a - g i a₀| + |g i a₀ - f a₀ i| + |f a₀ i| := by gcongr; apply abs_sub_le 
         _ = |g i a - g i a₀| + |f a₀ i| := by simp [hgr ha₀_in_s, sub_self _]
-        _ ≤ ↑K * dist a a₀ + abs (f a₀ i):= by 
+        _ ≤ ↑K * dist a a₀ + |f a₀ i|:= by 
             gcongr
             exact lipschitzWith_iff_dist_le_mul.1 hgl a a₀
         _ ≤ ↑K * dist a a₀ + M := by
