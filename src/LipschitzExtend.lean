@@ -44,21 +44,19 @@ theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α 
       rcases hg with ⟨hgl, hgr⟩
       calc
         abs (g i a) = abs (g i a - f a₀ i + f a₀ i) := by simp
-        _ ≤ abs (g i a - f a₀ i) + abs (f a₀ i) :=  abs_add _ _
+        _ ≤ abs (g i a - f a₀ i) + abs (f a₀ i) :=  abs_add _ _ --------
         _ = abs ((g i a - g i a₀) + (g i a₀ - f a₀ i)) + abs (f a₀ i):= by ring_nf
         _ ≤ abs (g i a - g i a₀ ) + abs (g i a₀ - f a₀ i) + abs (f a₀ i) := by
           gcongr
           apply abs_add
         _ = abs (g i a - g i a₀ ) + abs (f a₀ i) := by
-          specialize hgr  ha₀_in_s 
+          specialize hgr ha₀_in_s 
           norm_num
           simp_rw [hgr, sub_self _]
-        _ ≤ ↑K * dist a a₀ + abs (f a₀ i):= by
+        _ ≤ ↑K * dist a a₀ + abs (f a₀ i):= by 
             gcongr
-            specialize hgl a a₀ 
-            conv_rhs at hgl => 
-              rw [edist_dist, coe_nnreal_eq, ← ENNReal.ofReal_mul K.coe_nonneg]
-            rwa [edist_le_ofReal (by positivity)] at hgl
+            rw[lipschitzWith_iff_dist_le_mul] at hgl
+            exact hgl a a₀ 
         _ ≤ ↑K * dist a a₀ + M := by
             gcongr    
             change ‖f a₀ i‖ ≤ _
@@ -74,4 +72,4 @@ theorem LipschitzOnWith.extend_linf [PseudoMetricSpace α] {s : Set α} {f : α 
       exact hgi x y
     · intro a hyp
       ext i
-      exact (hg i).2 hyp
+      exact (hg i).2 hyp 
