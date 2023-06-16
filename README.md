@@ -1,13 +1,15 @@
 ## Formal_Lipschitz
-Implementation of Theorem 2.2 https://web.math.princeton.edu/~naor/homepage%20files/embeddings_extensions.pdf
+Implementation of Theorem 2.2 of "Metric Embeddings and Lipschitz Extentensions by Assaf Naor" page 5
 
-## Relevant Library functions 
-Lean documentation : https://leanprover-community.github.io/mathlib4_docs/Mathlib/Analysis/NormedSpace/lpSpace.html 
+Link: https://web.math.princeton.edu/~naor/homepage%20files/embeddings_extensions.pdf
 
-Lp space : https://leanprover-community.github.io/mathlib4_docs/Mathlib/Analysis/NormedSpace/lpSpace.html
+Code now integrated in Mathlib4 under :
+### Mathlib.Topology.MetricSpace.Kuratowski
 
-Lean Hahn Banach theorem implementation: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Analysis/NormedSpace/HahnBanach/Extension.html
+### Mathlib.Analysis.lpSpace 
 
+### Mathlib.Topology.MetricSpace.Lipschitz
+ 
 ## Theorem 2.2. 
 
 Suppose $\left(X, d_X\right)$ is a metric space, $A \subseteq X$ and let $f: A \rightarrow \ell_{\infty}(\Gamma)$ a Lipschitz function. Then, there is an
