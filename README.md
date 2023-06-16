@@ -1,3 +1,5 @@
+This code was written as part of the 2023 MSRI "Formalization of Mathematics" workshop hosted in Berkeley California
+
 ## Formal_Lipschitz
 Implementation of Theorem 2.2 of "Metric Embeddings and Lipschitz Extentensions by Assaf Naor" page 5
 
